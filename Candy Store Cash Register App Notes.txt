@@ -1,0 +1,153 @@
+Candy Store Cash Register App
+
+Notes:  - use BigDecimal
+	- write unit tests after method
+	- where does qty go
+
+Step 1:
+
+Create the following classes:
+
+Candy
+Chocolates extends Candy
+Sours extends Candy
+Licorice extends Candy
+HardCandy extends Candy
+
+InventoryBuilder - build out inventory
+
+Balance - keep track of money from customer
+
+ShoppingCart - contains all the candy ordered from the customer
+
+
+Step: 2
+
+Write in comments what we're doing in each class
+
+Step 3:
+
+Candy Class
+
+** vars **
+id
+name
+qty
+price
+wrapper
+
+** constructor **
+Candy(all vars)
+
+** methods **
+getters/setters
+
+
+Chocolate Class
+
+** constructor **
+super
+
+** methods **
+getCandyType
+toString
+
+
+Sours Class
+
+** constructor **
+super
+
+** methods **
+getCandyType
+toString
+
+
+Licorice Class
+
+** constructor **
+super
+
+** methods **
+getCandyType
+toString
+
+
+HardCandy Class
+
+** constructor **
+super
+
+** methods **
+getCandyType
+toString
+
+
+Balance Class
+
+** vars **
+balance (starts with $0)
+
+** constructor **
+
+** methods **
+addToBalance 		- adds money to total balance
+			- can't add more than $100
+			- can't get total balance over $1000
+
+subtractFromBalance 	- subtracts money from total balance
+getBalance		- shows current balance
+
+
+InventoryBuilder Class
+
+** vars **
+file - file to read
+
+** constructor **
+takes in file as paramater
+
+** methods **
+getInventory 	- returns Map<String, Candy> of iventory
+		- instantiates new candy for each line of inventory
+
+updateInventory	- update the quantity of a candy item
+checkInventory(Candy, QTY)	- verify candy has enough stock
+
+
+ShoppingCart
+
+** vars **
+List<Candy> candyListCart - contains all candy ordered by customer
+
+** constructor **
+
+
+** methods **
+addToCandyListCart 		- add candy to list
+calculateTotalCost		- adds up cost of all candy
+
+
+Menu
+
+All inputs and print outs here
+
+Logging
+
+append every transaction (money or candy)
+
+
+
+*** On Sale end ***
+
+return total spent and change given back
+reset customer balance to 0
+reset shopping cart
+print receipt
+
+
+
+Bonus Sales Report
+
+When sale starts, reads TotalSales.rpt (if there is one) and
+At sale end it rewrites TotalSales.rpt that updates all total items sold
