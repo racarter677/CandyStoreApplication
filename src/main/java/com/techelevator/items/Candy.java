@@ -2,7 +2,7 @@ package com.techelevator.items;
 
 import java.math.BigDecimal;
 
-public abstract class Candy {
+public class Candy {
     private String ID;
     private String name;
     private BigDecimal price;
@@ -26,8 +26,6 @@ public abstract class Candy {
             return "unknown";
         }
     }
-
-    public abstract String getCandyType();
 
     public String getID() {
         return ID;

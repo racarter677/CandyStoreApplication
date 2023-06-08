@@ -8,10 +8,6 @@ public class HardCandy extends Candy{
         super(ID, name, price, wrapper);
     }
 
-    @Override
-    public String getCandyType() {
-        return "Hard Candy";
-    }
 
     @Override
     public String toString() {
