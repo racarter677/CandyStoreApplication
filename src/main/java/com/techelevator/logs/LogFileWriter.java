@@ -1,4 +1,4 @@
-package com.techelevator.filereader;
+package com.techelevator.logs;
 
 import com.techelevator.ApplicationCLI;
 

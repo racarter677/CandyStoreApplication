@@ -8,6 +8,9 @@ public class Licorice extends Candy{
         super(ID, name, price, wrapper);
     }
 
+    public String getCandyType() {
+        return "Licorice and Jellies";
+    }
 
     @Override
     public String toString() {

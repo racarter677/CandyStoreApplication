@@ -7,6 +7,9 @@ public class Sours extends Candy{
         super(ID, name, price, wrapper);
     }
 
+    public String getCandyType() {
+        return "Sour Flavored Candies";
+    }
 
     @Override
     public String toString() {

@@ -9,6 +9,9 @@ public class Chocolate extends Candy {
 
     }
 
+    public String getCandyType() {
+        return "Chocolate Confectionery";
+    }
 
     @Override
     public String toString() {
