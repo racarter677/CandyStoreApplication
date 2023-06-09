@@ -4,6 +4,8 @@ import com.techelevator.logs.Log;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Balance {
 
@@ -47,18 +49,34 @@ public class Balance {
     }
 
     public void giveChange(BigDecimal totalCost) {
+        StringBuilder str = new StringBuilder();
         BigDecimal change = balance.subtract(totalCost);
-        BigDecimal[] denominations =
-                new BigDecimal[]{
-                        new BigDecimal("20.00"),
-                        new BigDecimal("10.00"),
-                        new BigDecimal("5.00"),
-                        new BigDecimal("1.00"),
-                        new BigDecimal("0.25"),
-                        new BigDecimal("0.10"),
-                        new BigDecimal("0.05"),};
+        BigDecimal[] denominationValues = {
+                new BigDecimal("20.00"),
+                new BigDecimal("10.00"),
+                new BigDecimal("5.00"),
+                new BigDecimal("1.00"),
+                new BigDecimal("0.25"),
+                new BigDecimal("0.10"),
+                new BigDecimal("0.05")};
+        String[] denominationNames = {"Twent", "Ten", "Five", "One", "Quarter", "Dime", "Nickel"};
         BigDecimal[] changeIn20 = change.divideAndRemainder(new BigDecimal("20.00"));
-        System.out.printf("Change returned: %s\n", currency.format(change));
+        str.append(String.format("Change returned: %s\n", currency.format(change)));
+        BigDecimal changeTab = change;
+        for (int i = 0; i < denominationNames.length; i++) {
+            BigDecimal[] quotientAndRemainder = changeTab.divideAndRemainder(denominationValues[i]);
+            BigDecimal quotient = quotientAndRemainder[0];
+            BigDecimal remainder = quotientAndRemainder[1];
+            StringBuilder suffix = new StringBuilder();
+            if (!quotient.equals(new BigDecimal("0"))) {
+                if (i == 0) {
+                    if (quotient.compareTo(new BigDecimal("2")) >= 0) str.append("ies");
+                    else str.append("y");
+                } else if (quotient.compareTo(new BigDecimal("2")) >= 0) suffix.append("s");
+                //if ()
+                System.out.printf("(%s) %s%s, ", quotient, denominationNames[i], suffix);
+            }
+        }
     }
 
     public void setBalance(BigDecimal balance) {

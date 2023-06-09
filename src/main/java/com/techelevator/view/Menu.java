@@ -32,6 +32,7 @@ public class Menu {
     }
 
     public void displayInventory(Inventory inv) {
+        System.out.println();
         System.out.println(inv);
     }
 
@@ -41,20 +42,20 @@ public class Menu {
         System.out.println("(1) Take Money");
         System.out.println("(2) Select Products");
         System.out.println("(3) Complete Sale");
-        System.out.println();
         displayBalance(balance);
+        System.out.println();
         System.out.println("Please make a selection: ");
         return userInput.nextLine();
     }
 
-    public BigDecimal showTakeMoney() {
+    public String showTakeMoney() {
         System.out.println();
         System.out.println("Please enter the amount you would like to add to Customer Balance");
         System.out.println("(Amount must be in whole dollars and no single deposit may exceed $100. MAX balance is  $1000");
-        System.out.println("(If you would like to exit Take Money enter 0)");
+        System.out.println("(If you would like to exit Take Money hit enter)");
         System.out.println("Enter amount here: ");
         String amountToAddString = userInput.nextLine();
-        return new BigDecimal(amountToAddString);
+        return new String(amountToAddString);
     }
 
     public String selectProducts() {
@@ -71,6 +72,7 @@ public class Menu {
     }
 
     public void displayBalance(Balance balance) {
+        System.out.println();
         System.out.println("Current customer balance: " + balance.getBalance());
     }
 

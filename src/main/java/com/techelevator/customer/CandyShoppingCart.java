@@ -42,7 +42,7 @@ public class CandyShoppingCart {
         System.out.println(str);
     }
 
-    public Map<String, Candy> getShoppingCartList() {
+    public Map<String, Candy> getShoppingCartlist() {
         return shoppingCartList;
     }
 

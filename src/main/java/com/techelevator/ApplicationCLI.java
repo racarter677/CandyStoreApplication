@@ -50,12 +50,18 @@ public class ApplicationCLI {
 					if(userInput.equals("1")) {
 						menu.displayMessage("Welcome to Take Money");
 						while (true) {
-							BigDecimal balanceToAdd = menu.showTakeMoney();
-							if (balanceToAdd.equals(new BigDecimal("0"))) {
+							menu.displayBalance(balance);
+							String balanceToAdd = menu.showTakeMoney();
+							if (balanceToAdd.equals("")) {
 								break;
 							}
-							balance.addToBalance(balanceToAdd);
-							menu.displayBalance(balance);
+							try {
+								BigDecimal addingBalance = new BigDecimal(balanceToAdd);
+								balance.addToBalance(addingBalance);
+							}
+							catch (NumberFormatException e) {
+								menu.displayMessage("Please enter a valid input");
+							}
 						}
 					}
 					else if (userInput.equals("2")) {
@@ -65,18 +71,28 @@ public class ApplicationCLI {
 							menu.displayMessage("Invalid ID");
 						}
 						else {
-							userQty = menu.qtyOfProduct();
+							try {
+								userQty = menu.qtyOfProduct();
+							}
+							catch (NumberFormatException e) {
+								menu.displayMessage("Invalid Input");
+							}
 							if (userQty <= inventory.getCandyQuantity(userInput)) {
 								inventory.removeFromInventory(userInput, userQty);
 								Candy candySelected = inventory.getInventoryMap().get(userInput);
 								candyShoppingCart.addCandyToShoppingCart(candySelected, userQty);
 								BigDecimal startBalance = balance.getBalance();
-								balance.subtractFromBalance(inventory
-										.getInventoryMap()
-										.get(userInput)
-										.getPrice()
-										.multiply(BigDecimal.valueOf(userQty)));
-								log.writeSub(candySelected, userQty, startBalance, balance.getBalance());
+								try {
+									balance.subtractFromBalance(inventory
+											.getInventoryMap()
+											.get(userInput)
+											.getPrice()
+											.multiply(BigDecimal.valueOf(userQty)));
+									log.writeSub(candySelected, userQty, startBalance, balance.getBalance());
+								}
+								catch (IllegalArgumentException e) {
+									menu.displayMessage("Not enough money");
+								}
 							} else {
 								menu.displayMessage("Not enough stock for quantity selected");
 							}
