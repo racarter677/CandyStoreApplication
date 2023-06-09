@@ -1,5 +1,7 @@
 package com.techelevator.customer;
 
+import com.techelevator.logs.Log;
+
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
@@ -9,6 +11,7 @@ public class Balance {
     private BigDecimal balance;
     private final BigDecimal MAX_ADDITION =  new BigDecimal("100.00");
     private final BigDecimal MAX_BALANCE = new BigDecimal("1000.00");
+    private Log log = new Log();
 
     public Balance() {
         balance = new BigDecimal("0.00");
@@ -18,6 +21,7 @@ public class Balance {
         BigDecimal potentialNewBalance = balance.add(moneyToAdd);
         if (moneyToAdd.compareTo(MAX_ADDITION) <= 0) {
             if (potentialNewBalance.compareTo(MAX_BALANCE) <= 0) {
+                log.writeAdd(balance, potentialNewBalance);
                 balance = balance.add(moneyToAdd);
             } else {
                 BigDecimal overBalance = potentialNewBalance.subtract(MAX_BALANCE);
@@ -40,6 +44,11 @@ public class Balance {
         if (potentialNewBalance.compareTo(new BigDecimal("0.00")) > -1) {
             balance = balance.subtract(moneyToSubtract);
         } else throw new IllegalArgumentException();
+    }
+
+    public void giveChange(BigDecimal totalCost) {
+        BigDecimal change = balance.subtract(totalCost);
+        System.out.printf("Change returned: %s\n", currency.format(change));
     }
 
     public void setBalance(BigDecimal balance) {

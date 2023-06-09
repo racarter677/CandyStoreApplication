@@ -33,7 +33,15 @@ class BalanceTest {
     }
 
     @Test
-    @DisplayName("3. Adding more than $100 should return the existing balance")
+    @DisplayName("3. Adding $100 increases the balance")
+    void add_100_returns_correct_balance() {
+        balance.setBalance(new BigDecimal("32.32"));
+        balance.addToBalance(new BigDecimal("100.00"));
+        assertEquals(new BigDecimal("132.32"), balance.getBalance());
+    }
+
+    @Test
+    @DisplayName("4. Adding more than $100 should return the existing balance")
     void adding_over_100_return_existing_balance() {
         balance.setBalance(new BigDecimal("0.00"));
         balance.addToBalance(new BigDecimal("200.00"));
@@ -43,7 +51,7 @@ class BalanceTest {
     }
 
     @Test
-    @DisplayName("4. Adding money that takes balance over $1000 should return existing balance")
+    @DisplayName("5. Adding money that takes balance over $1000 should return existing balance")
     void adding_to_total_over_1000_return_existing_balance() {
         balance.setBalance(new BigDecimal("950.00"));
         balance.addToBalance(new BigDecimal("60.00"));
@@ -53,7 +61,7 @@ class BalanceTest {
     }
 
     @Test
-    @DisplayName("5. Subtracting money from balance returns correct balance")
+    @DisplayName("6. Subtracting money from balance returns correct balance")
     void subtracting_from_total_returns_correct_balance() {
         balance.setBalance(new BigDecimal("100.00"));
         balance.subtractFromBalance(new BigDecimal("60.00"));
@@ -65,7 +73,7 @@ class BalanceTest {
     }
 
     @Test
-    @DisplayName("6. Subtracting money from balance throws exception and returns existing balance")
+    @DisplayName("7. Subtracting money from balance throws exception and returns existing balance")
     void subtracting_too_much() {
         balance.setBalance(new BigDecimal("100.00"));
         assertThrowsExactly(IllegalArgumentException.class, () -> {

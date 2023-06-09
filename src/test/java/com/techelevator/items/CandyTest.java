@@ -19,14 +19,14 @@ class CandyTest {
     @Test
     @DisplayName("1. getWrapper Test")
     void getWrapper_expected_Y() {
-        candy = new Candy("H1", "Jolly Rancher", new BigDecimal(3.99), true);
+        candy = new Chocolate("C1", "Jolly Rancher", new BigDecimal("3.99"), true);
         assertEquals("Y", candy.getWrapper());
     }
 
     @Test
     @DisplayName("2. getWrapper Test2")
     void getWrapper_expected_N() {
-        candy = new Candy("H1", "Jolly Rancher", new BigDecimal(3.99), false);
+        candy = new Chocolate("C1", "Jolly Rancher", new BigDecimal("3.99"), false);
         assertEquals("N", candy.getWrapper());
     }
 

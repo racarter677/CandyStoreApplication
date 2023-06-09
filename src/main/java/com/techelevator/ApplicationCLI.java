@@ -5,9 +5,11 @@ import com.techelevator.customer.CandyShoppingCart;
 import com.techelevator.filereader.InventoryFileReader;
 import com.techelevator.items.Candy;
 import com.techelevator.items.Inventory;
+import com.techelevator.logs.Log;
 import com.techelevator.view.Menu;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 
 public class ApplicationCLI {
 
@@ -15,6 +17,7 @@ public class ApplicationCLI {
 	private Inventory inventory;
 	private Balance balance;
 	private CandyShoppingCart candyShoppingCart;
+	private Log log = new Log();
 
 	// probably should leave this method alone... and go do stuff in the run method....
 	public static void main(String[] args) {
@@ -31,23 +34,31 @@ public class ApplicationCLI {
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
-		candyShoppingCart = new CandyShoppingCart();
 		balance = new Balance();
 
 		while(true) {
+			candyShoppingCart = new CandyShoppingCart();
 			String userInput = "";
+			int userQty = 0;
 			userInput = menu.getMainMenu();
 			if(userInput.equals("1")) {
 				menu.displayInventory(inventory);
 			}
 			else if(userInput.equals("2")) {
 				while(true) {
-					userInput = menu.displayMakeSale();
+					userInput = menu.displayMakeSale(balance);
 					if(userInput.equals("1")) {
-						balance.addToBalance(menu.showTakeMoney());
+						menu.displayMessage("Welcome to Take Money");
+						while (true) {
+							BigDecimal balanceToAdd = menu.showTakeMoney();
+							if (balanceToAdd.equals(new BigDecimal("0"))) {
+								break;
+							}
+							balance.addToBalance(balanceToAdd);
+							menu.displayBalance(balance);
+						}
 					}
 					else if (userInput.equals("2")) {
-						int userQty = 0;
 						menu.displayInventory(inventory);
 						userInput = menu.selectProducts();
 						if (!inventory.getInventoryMap().containsKey(userInput)) {
@@ -57,10 +68,28 @@ public class ApplicationCLI {
 							userQty = menu.qtyOfProduct();
 							if (userQty <= inventory.getCandyQuantity(userInput)) {
 								inventory.removeFromInventory(userInput, userQty);
-								candyShoppingCart.addCandyToShoppingCart(inventory.getInventoryMap().get(userInput));
-								System.out.println(candyShoppingCart.getShoppingCartList());
+								Candy candySelected = inventory.getInventoryMap().get(userInput);
+								candyShoppingCart.addCandyToShoppingCart(candySelected, userQty);
+								BigDecimal startBalance = balance.getBalance();
+								balance.subtractFromBalance(inventory
+										.getInventoryMap()
+										.get(userInput)
+										.getPrice()
+										.multiply(BigDecimal.valueOf(userQty)));
+								log.writeSub(candySelected, userQty, startBalance, balance.getBalance());
+							} else {
+								menu.displayMessage("Not enough stock for quantity selected");
 							}
 						}
+					}
+					else if (userInput.equals("3")) {
+						candyShoppingCart.receipt();
+						balance.giveChange(candyShoppingCart.getTotalCost());
+						balance.setBalance(new BigDecimal(0));
+						break;
+					}
+					else {
+						menu.displayMessage("Please enter a valid input (1, 2, 3)");
 					}
 				}
 			}
