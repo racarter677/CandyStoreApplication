@@ -26,7 +26,8 @@ class CandyShoppingCartTest {
     @Test
     @DisplayName("1. Total Cost of Shopping Cart Test")
     void total_cost_of_cart_test(){
-        assertEquals(new BigDecimal("140"), candyShoppingCart.getTotalCost());
+        candyShoppingCart.receipt();
+        assertEquals(0, new BigDecimal("140").compareTo(candyShoppingCart.getTotalCost()));
     }
 
     @Test

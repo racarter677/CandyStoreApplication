@@ -12,7 +12,7 @@ public class CandyShoppingCart {
     private Map<String, Candy> shoppingCartList = new HashMap<>();
     private Map<String, Integer> shoppingCartWithQty = new LinkedHashMap<>();
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
-    private BigDecimal totalCost = new BigDecimal("0.00");
+    private BigDecimal totalCost;
 
     public void addCandyToShoppingCart(Candy candyToAdd, int qty) {
         String candyID = candyToAdd.getID();
@@ -24,9 +24,10 @@ public class CandyShoppingCart {
 
     }
 
+    // Change a return of String instead of printing out receipt later, then pass receipt through menu messaging in main method
     public void receipt() {
         StringBuilder str = new StringBuilder(String.format("%-6s%-20s%-25s%-9s%-10s\n", "Qty", "Name", "Candy Type", "Price", "Total Cost"));
-        BigDecimal totalCost = new BigDecimal("0.00");
+        totalCost = new BigDecimal("0.00");
         for (Map.Entry<String, Integer> iD : shoppingCartWithQty.entrySet()) {
             int qty = iD.getValue();
             Candy candy = shoppingCartList.get(iD.getKey());

@@ -48,6 +48,16 @@ public class Balance {
 
     public void giveChange(BigDecimal totalCost) {
         BigDecimal change = balance.subtract(totalCost);
+        BigDecimal[] denominations =
+                new BigDecimal[]{
+                        new BigDecimal("20.00"),
+                        new BigDecimal("10.00"),
+                        new BigDecimal("5.00"),
+                        new BigDecimal("1.00"),
+                        new BigDecimal("0.25"),
+                        new BigDecimal("0.10"),
+                        new BigDecimal("0.05"),};
+        BigDecimal[] changeIn20 = change.divideAndRemainder(new BigDecimal("20.00"));
         System.out.printf("Change returned: %s\n", currency.format(change));
     }
 
