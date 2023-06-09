@@ -31,10 +31,6 @@ public abstract class Candy {
         return ID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
     public String getName() {
         return name;
     }
@@ -47,16 +43,8 @@ public abstract class Candy {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
     public boolean isWrapper() {
         return wrapper;
-    }
-
-    public void setWrapper(boolean wrapper) {
-        this.wrapper = wrapper;
     }
 
     public abstract String getCandyType();

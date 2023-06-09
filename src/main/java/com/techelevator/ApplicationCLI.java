@@ -35,7 +35,7 @@ public class ApplicationCLI {
 			throw new RuntimeException(e);
 		}
 		balance = new Balance();
-
+		menu.printGreeting();
 		while(true) {
 			candyShoppingCart = new CandyShoppingCart();
 			String userInput = "";
@@ -100,8 +100,8 @@ public class ApplicationCLI {
 					}
 					else if (userInput.equals("3")) {
 						candyShoppingCart.receipt();
-						balance.giveChange(candyShoppingCart.getTotalCost());
-						balance.setBalance(new BigDecimal(0));
+						menu.displayMessage(balance.giveChange(candyShoppingCart.getTotalCost()));
+						log.pushToLog();
 						break;
 					}
 					else {

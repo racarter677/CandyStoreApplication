@@ -8,7 +8,6 @@ import java.util.*;
 
 public class CandyShoppingCart {
 
-    //private  List <Candy> shoppingCartList = new ArrayList<>();
     private Map<String, Candy> shoppingCartList = new HashMap<>();
     private Map<String, Integer> shoppingCartWithQty = new LinkedHashMap<>();
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();

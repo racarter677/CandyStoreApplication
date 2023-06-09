@@ -50,14 +50,15 @@ public class Inventory {
     @Override
     public String toString() {
         Map<String, Integer> sortedInv = new TreeMap<>(inventoryQuantities);
-        StringBuilder str = new StringBuilder(String.format("%-6s%-20s%-10s%-6s%-10s\n", "Id", "Name", "Wrapper", "Qty", "Price"));
+        StringBuilder str = new StringBuilder(String.format("%-6s%-20s%-10s%-11s%-10s\n", "Id", "Name", "Wrapper", "Qty", "Price"));
         for (Map.Entry<String, Integer> iD : sortedInv.entrySet()) {
-            int qty = iD.getValue();
+            String qty = iD.getValue().toString();
+            if (iD.getValue() == 0) qty = "SOLD OUT";
             Candy candy = inventory.get(iD.getKey());
             String name = candy.getName();
             String wrapper = candy.getWrapper();
             BigDecimal price = candy.getPrice();
-            str.append(String.format("%-6s%-20s%-10s%-6s%-10s\n", iD.getKey(), name, wrapper, qty, currency.format(price)));
+            str.append(String.format("%-6s%-20s%-10s%-11s%-10s\n", iD.getKey(), name, wrapper, qty, currency.format(price)));
         }
         return str.toString();
     }

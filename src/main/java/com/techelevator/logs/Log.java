@@ -13,26 +13,40 @@ import java.util.List;
 public class Log {
 
     private static List<String> logList = new ArrayList<>();
-    private DateTimeFormatter dTFormat = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT); // use MEDIUM LocalDateTime or FULL if using Zoned
+    private final DateTimeFormatter dTFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
 
-    public void writeAdd(BigDecimal startBalance, BigDecimal endingBalance) {
-        final String MONEY_RECEIVED = "MONEY RECEIVED";
-        logList.add(String.format("%-24s%-17s%-9s%-9s",
+    public void writeAdd(BigDecimal startBalance, BigDecimal endingBalance) { //
+        final String LOG_MESSAGE = "MONEY RECEIVED";
+        logList.add(String.format("%s %s %s %s",
                 LocalDateTime.now().format(dTFormat),
-                MONEY_RECEIVED,
+                LOG_MESSAGE,
                 currency.format(startBalance),
                 currency.format(endingBalance)));
     }
 
-    public void writeSub(Candy candy, int qty, BigDecimal startBalance, BigDecimal endingBalance) {
-        logList.add(String.format("%-24s%-4s%-15s%-3s%-9s%-9s",
+    public void writeSub(Candy candy, int qty, BigDecimal startBalance, BigDecimal endingBalance) { //+7
+        logList.add(String.format("%s %s %s %s %s %s",
                 LocalDateTime.now().format(dTFormat),
                 qty,
                 candy.getName(),
                 candy.getID(),
                 currency.format(startBalance),
                 currency.format(endingBalance)));
+    }
+
+    public void writeChange(BigDecimal change, BigDecimal balance) { //
+        final String LOG_MESSAGE = "CHANGE GIVEN";
+        logList.add(String.format("%s %s %s %s",
+                LocalDateTime.now().format(dTFormat),
+                LOG_MESSAGE,
+                currency.format(change),
+                currency.format(balance)));
+    }
+
+    public void pushToLog() {
+        LogFileWriter logger = new LogFileWriter();
+        logger.logWriter(logList);
     }
 
 }
