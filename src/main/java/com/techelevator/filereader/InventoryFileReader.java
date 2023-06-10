@@ -5,6 +5,7 @@ import com.techelevator.items.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -17,12 +18,15 @@ import java.util.TreeMap;
 public class InventoryFileReader {
 
     private final String filePath;
+    private static Map<String,Candy> inventory = new HashMap<>();
+    private int previousTotalCandy;
+    private BigDecimal previousTotalSales;
 
     public InventoryFileReader(String inventoryFilePath){
         this.filePath = inventoryFilePath;
     }
     public Map<String, Candy> getInventory() throws FileNotFoundException {
-        Map<String,Candy> inventory = new HashMap<>();
+//        Map<String,Candy> inventory = new HashMap<>();
 
         //build File object to rep abstract File in system
         File inventoryCSV = new File(filePath);
@@ -56,19 +60,51 @@ public class InventoryFileReader {
         return inventory;
     }
 
-//    public static void main(String[] args) {
-//        InventoryFileReader inv = new InventoryFileReader("inventory.csv");
-//        try {
-//            Map<String, Candy> candyMap = new TreeMap<>(inv.getInventory());
-//            for (Map.Entry<String, Candy> candy : candyMap.entrySet()) {
-//                System.out.println(candy);
-//            }
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//    }
+    public Map<Candy, Integer> pullExistingSalesReport() throws FileNotFoundException {
+        Map<Candy, Integer> candySaleTotals = new HashMap<>();
+        File salesReport= new File(filePath);
+        try(Scanner inventoryScanner = new Scanner(salesReport)){
+            while(inventoryScanner.hasNextLine()){
+                String currentLine = inventoryScanner.nextLine();
+                Candy currentCandy = null;
+                int qty = 0;
+                if (currentLine.startsWith("*") || currentLine.startsWith("I")) continue;
+                else if (currentLine.equals("")) continue;
+                else if (currentLine.startsWith("Total Number")) {
+                    previousTotalCandy = Integer.parseInt(currentLine.split(":")[1].trim());
+                } else if (currentLine.startsWith("Total Sales")) {
+                    previousTotalSales = new BigDecimal(currentLine.split(":")[1].trim().substring(1));
+                } else {
+                    //build an array from the current string splitting on |
+                    String[] currentLineToArray = currentLine.split("\\|");
+                    String candyID = currentLineToArray[0].trim();
+                    String name = currentLineToArray[1].trim();
+                    qty = Integer.parseInt(currentLineToArray[2].trim());
+                    BigDecimal price = new BigDecimal(currentLineToArray[3].trim().substring(1))
+                            .divide(new BigDecimal(qty), 2, RoundingMode.HALF_UP);
+                    boolean isWrapped = true;
+                    if (inventory.containsKey(candyID)) currentCandy = inventory.get(candyID);
+                    else if (candyID.startsWith("C")) {
+                        currentCandy = new Chocolate(candyID, name, price, isWrapped);
+                    } else if (candyID.startsWith("S")) {
+                        currentCandy = new Sours(candyID, name, price, isWrapped);
+                    } else if (candyID.startsWith("H")) {
+                        currentCandy = new HardCandy(candyID, name, price, isWrapped);
+                    } else if (candyID.startsWith("L")) {
+                        currentCandy = new Licorice(candyID, name, price, isWrapped);
+                    }
+                    candySaleTotals.put(currentCandy,qty);
+                }
+            }
+        }
+        return candySaleTotals;
+    }
 
+    public int getPreviousTotalCandy() {
+        return previousTotalCandy;
+    }
 
-
+    public BigDecimal getPreviousTotalSales() {
+        return previousTotalSales;
+    }
 }

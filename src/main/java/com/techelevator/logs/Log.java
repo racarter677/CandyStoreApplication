@@ -2,11 +2,13 @@ package com.techelevator.logs;
 
 import com.techelevator.items.Candy;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Log {
@@ -45,6 +47,7 @@ public class Log {
 
     public void pushToLog() {
         LogFileWriter logger = new LogFileWriter();
+        logger.logFileWriter("log.txt");
         logger.logWriter(logList);
     }
 

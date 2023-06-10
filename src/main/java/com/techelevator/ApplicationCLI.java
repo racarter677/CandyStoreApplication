@@ -78,17 +78,17 @@ public class ApplicationCLI {
 								menu.displayMessage("Invalid Input");
 							}
 							if (userQty <= inventory.getCandyQuantity(userInput)) {
-								inventory.removeFromInventory(userInput, userQty);
-								Candy candySelected = inventory.getInventoryMap().get(userInput);
-								candyShoppingCart.addCandyToShoppingCart(candySelected, userQty);
 								BigDecimal startBalance = balance.getBalance();
 								try {
+									Candy candySelected = inventory.getInventoryMap().get(userInput);
 									balance.subtractFromBalance(inventory
 											.getInventoryMap()
-											.get(userInput)
+											.get(userInput.toUpperCase())
 											.getPrice()
 											.multiply(BigDecimal.valueOf(userQty)));
 									log.writeSub(candySelected, userQty, startBalance, balance.getBalance());
+									inventory.removeFromInventory(userInput, userQty);
+									candyShoppingCart.addCandyToShoppingCart(candySelected, userQty);
 								}
 								catch (IllegalArgumentException e) {
 									menu.displayMessage("Not enough money");

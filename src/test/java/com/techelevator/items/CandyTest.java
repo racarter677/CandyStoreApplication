@@ -3,6 +3,8 @@ package com.techelevator.items;
 import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,5 +31,6 @@ class CandyTest {
         candy = new Chocolate("C1", "Jolly Rancher", new BigDecimal("3.99"), false);
         assertEquals("N", candy.getWrapper());
     }
+
 
 }
