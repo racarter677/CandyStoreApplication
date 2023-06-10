@@ -100,7 +100,7 @@ public class ApplicationCLI {
 					}
 					else if (userInput.equals("3")) {
 						candyShoppingCart.receipt();
-						menu.displayMessage(balance.giveChange(candyShoppingCart.getTotalCost()));
+						menu.displayMessage(balance.giveChange());
 						log.pushToLog();
 						break;
 					}

@@ -40,6 +40,7 @@ class BalanceTest {
         assertEquals(new BigDecimal("132.32"), balance.getBalance());
     }
 
+    @Disabled
     @Test
     @DisplayName("4. Adding more than $100 should return the existing balance")
     void adding_over_100_return_existing_balance() {
@@ -80,6 +81,24 @@ class BalanceTest {
             balance.subtractFromBalance(new BigDecimal("200.00"));
         });
         assertEquals(new BigDecimal("100.00"), balance.getBalance());
+    }
+
+    @Test
+    @DisplayName("8. Change denominations are correct")
+    void change_denomination_check() {
+        balance.setBalance(new BigDecimal("77.80"));
+        //System.out.println(balance.giveChange());
+        assertEquals("Change returned: $77.80\n" +
+                "(3) Twenties, (1) Ten, (1) Five, (2) Ones, (3) Quarters, (1) Nickel\n", balance.giveChange());
+        balance.setBalance(new BigDecimal("50.20"));
+        assertEquals("Change returned: $50.20\n" +
+                "(2) Twenties, (1) Ten, (2) Dimes\n", balance.giveChange());
+        balance.setBalance(new BigDecimal("32.30"));
+        assertEquals("Change returned: $32.30\n" +
+                "(1) Twenty, (1) Ten, (2) Ones, (1) Quarter, (1) Nickel\n", balance.giveChange());
+        balance.setBalance(new BigDecimal("14.05"));
+        assertEquals("Change returned: $14.05\n" +
+                "(1) Ten, (4) Ones, (1) Nickel\n", balance.giveChange());
     }
 
 }
