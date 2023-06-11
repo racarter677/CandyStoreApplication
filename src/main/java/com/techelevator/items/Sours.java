@@ -7,6 +7,10 @@ public class Sours extends Candy{
         super(ID, name, price, wrapper);
     }
 
+    public Sours(String ID, String name, BigDecimal price, boolean wrapper, boolean isCurrentInventory) {
+        super(ID, name, price, wrapper, isCurrentInventory);
+    }
+
     public String getCandyType() {
         return "Sour Flavored Candies";
     }

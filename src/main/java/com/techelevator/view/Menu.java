@@ -77,7 +77,7 @@ public class Menu {
 
     public void displayBalance(Balance balance) {
         System.out.println();
-        System.out.println("Current customer balance: " + balance.getBalance());
+        System.out.println("Current customer balance: " + currency.format(balance.getBalance()));
     }
 
     public void displayMessage(String message) {

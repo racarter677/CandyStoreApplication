@@ -51,4 +51,8 @@ public class Log {
         logger.logWriter(logList);
     }
 
+    public void resetLog() {
+        logList = new ArrayList<>();
+    }
+
 }

@@ -2,12 +2,8 @@
 ******************* Candy Store Total Sales *******************
 ***************************************************************
 ID | Candy               |  Qty |      Cost |   QTY % |  Cost %
-C1 | Snuckers Bar        |   45 |    $60.75 |  27.44% |  25.82%
-C2 | Flat Top            |   17 |    $13.60 |  10.37% |   5.78%
-C3 | Truffle             |   50 |    $52.50 |  30.49% |  22.32%
-C4 | Dipped Beans        |   10 |    $69.50 |   6.10% |  29.54%
-C5 | Chunk Heads         |   32 |    $30.40 |  19.51% |  12.92%
-S3 | Sour Tart           |   10 |     $8.50 |   6.10% |   3.61%
+C1 | Snuckers Bar        |   20 |    $27.00 |  66.67% |  72.00%
+C3 | Truffle             |   10 |    $10.50 |  33.33% |  28.00%
 
-Total Number of Candy Sold: 164
-Total Sales: $235.25
+Total Number of Candy Sold: 30
+Total Sales: $37.50

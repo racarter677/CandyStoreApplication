@@ -8,6 +8,10 @@ public class Licorice extends Candy{
         super(ID, name, price, wrapper);
     }
 
+    public Licorice(String ID, String name, BigDecimal price, boolean wrapper, boolean isCurrentInventory) {
+        super(ID, name, price, wrapper, isCurrentInventory);
+    }
+
     public String getCandyType() {
         return "Licorice and Jellies";
     }

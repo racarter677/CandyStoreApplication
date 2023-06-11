@@ -6,6 +6,7 @@ import com.techelevator.filereader.InventoryFileReader;
 import com.techelevator.items.Candy;
 import com.techelevator.items.Inventory;
 import com.techelevator.logs.Log;
+import com.techelevator.logs.SalesReport;
 import com.techelevator.view.Menu;
 
 import java.io.FileNotFoundException;
@@ -63,6 +64,8 @@ public class ApplicationCLI {
 								menu.displayMessage("Please enter a valid input");
 							}
 						}
+					} else if((userInput.equals("2") || userInput.equals("3")) && candyShoppingCart.getCandyShoppingCart().size() == 0 && balance.getBalance().equals(new BigDecimal("0.00"))) {
+						menu.displayMessage("Please add money to balance first.");
 					}
 					else if (userInput.equals("2")) {
 						menu.displayInventory(inventory);
@@ -99,9 +102,11 @@ public class ApplicationCLI {
 						}
 					}
 					else if (userInput.equals("3")) {
-						candyShoppingCart.receipt();
+						menu.displayMessage(candyShoppingCart.receipt());
 						menu.displayMessage(balance.giveChange());
 						log.pushToLog();
+						log.resetLog();
+						candyShoppingCart = new CandyShoppingCart();
 						break;
 					}
 					else {
@@ -111,6 +116,7 @@ public class ApplicationCLI {
 			}
 			else if(userInput.equals("3")) {
 				menu.displayExit();
+				SalesReport salesRpt = new SalesReport(candyShoppingCart.getFullTotalCount(), candyShoppingCart.getFullTotalCost());
 				break;
 			}
 			else {

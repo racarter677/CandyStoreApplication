@@ -19,19 +19,16 @@ public class InventoryFileReader {
 
     private final String filePath;
     private static Map<String,Candy> inventory = new HashMap<>();
-    private int previousTotalCandy;
-    private BigDecimal previousTotalSales;
+    private static int previousTotalCandy = 0;
+    private static BigDecimal previousTotalSales = new BigDecimal("0.00");
 
     public InventoryFileReader(String inventoryFilePath){
         this.filePath = inventoryFilePath;
     }
     public Map<String, Candy> getInventory() throws FileNotFoundException {
-//        Map<String,Candy> inventory = new HashMap<>();
 
-        //build File object to rep abstract File in system
         File inventoryCSV = new File(filePath);
         //need to build a scanner that uses inventoryCSV as an input
-        //also need to manage that scanner, so I will use a try-with-resource
         try(Scanner inventoryScanner = new Scanner(inventoryCSV)){
             while(inventoryScanner.hasNextLine()){
                 String currentLineFromInventoryScanner = inventoryScanner.nextLine();
@@ -44,30 +41,29 @@ public class InventoryFileReader {
                 BigDecimal price = new BigDecimal(currentLineToArray[3]);
                 boolean isWrapped = currentLineToArray[4].equalsIgnoreCase("t");
                 if(typeOfCandy.equalsIgnoreCase("ch")){
-                    currentCandy = new Chocolate(candyID, name, price, isWrapped);
+                    currentCandy = new Chocolate(candyID, name, price, isWrapped, true);
                 } else if(typeOfCandy.equalsIgnoreCase("sr")){
-                    currentCandy = new Sours(candyID, name, price, isWrapped);
+                    currentCandy = new Sours(candyID, name, price, isWrapped, true);
                 } else if(typeOfCandy.equalsIgnoreCase("hc")){
-                    currentCandy = new HardCandy(candyID, name, price, isWrapped);
+                    currentCandy = new HardCandy(candyID, name, price, isWrapped, true);
                 }else if(typeOfCandy.equalsIgnoreCase("li")){
-                    currentCandy = new Licorice(candyID, name, price, isWrapped);
+                    currentCandy = new Licorice(candyID, name, price, isWrapped, true);
                 }
 
                 inventory.put(candyID,currentCandy);
             }
         }
-
         return inventory;
     }
 
-    public Map<Candy, Integer> pullExistingSalesReport() throws FileNotFoundException {
-        Map<Candy, Integer> candySaleTotals = new HashMap<>();
-        File salesReport= new File(filePath);
-        try(Scanner inventoryScanner = new Scanner(salesReport)){
-            while(inventoryScanner.hasNextLine()){
+    public Map<String, Candy> pullExistingSalesReport() {
+        File salesReport= new File("TotalSales.rpt");
+//        Map<String, Candy> candySaleTotals = new HashMap<>(inventory);
+        try (Scanner inventoryScanner = new Scanner(salesReport)) {
+            while (inventoryScanner.hasNextLine()) {
                 String currentLine = inventoryScanner.nextLine();
                 Candy currentCandy = null;
-                int qty = 0;
+                int qty;
                 if (currentLine.startsWith("*") || currentLine.startsWith("I")) continue;
                 else if (currentLine.equals("")) continue;
                 else if (currentLine.startsWith("Total Number")) {
@@ -80,24 +76,34 @@ public class InventoryFileReader {
                     String candyID = currentLineToArray[0].trim();
                     String name = currentLineToArray[1].trim();
                     qty = Integer.parseInt(currentLineToArray[2].trim());
-                    BigDecimal price = new BigDecimal(currentLineToArray[3].trim().substring(1))
-                            .divide(new BigDecimal(qty), 2, RoundingMode.HALF_UP);
+                    BigDecimal totalRevenue = new BigDecimal(currentLineToArray[3].trim().substring(1));
+                    BigDecimal price = totalRevenue.divide(new BigDecimal(qty), 2, RoundingMode.HALF_UP);
                     boolean isWrapped = true;
-                    if (inventory.containsKey(candyID)) currentCandy = inventory.get(candyID);
-                    else if (candyID.startsWith("C")) {
-                        currentCandy = new Chocolate(candyID, name, price, isWrapped);
-                    } else if (candyID.startsWith("S")) {
-                        currentCandy = new Sours(candyID, name, price, isWrapped);
-                    } else if (candyID.startsWith("H")) {
-                        currentCandy = new HardCandy(candyID, name, price, isWrapped);
-                    } else if (candyID.startsWith("L")) {
-                        currentCandy = new Licorice(candyID, name, price, isWrapped);
+                    if (inventory.containsKey(candyID)) {
+                        currentCandy = inventory.get(candyID);
+                        currentCandy.setTotalSold(qty);
+                        currentCandy.setTotalRevenue(totalRevenue);
+                    } else {
+                        if (candyID.startsWith("C")) {
+                            currentCandy = new Chocolate(candyID, name, price, isWrapped, false);
+                        } else if (candyID.startsWith("S")) {
+                            currentCandy = new Sours(candyID, name, price, isWrapped, false);
+                        } else if (candyID.startsWith("H")) {
+                            currentCandy = new HardCandy(candyID, name, price, isWrapped, false);
+                        } else if (candyID.startsWith("L")) {
+                            currentCandy = new Licorice(candyID, name, price, isWrapped, false);
+                        }
+                        if (currentCandy != null) {
+                            currentCandy.setTotalSold(qty);
+                            currentCandy.setTotalRevenue(totalRevenue);
+                            inventory.put(candyID, currentCandy);
+                        }
                     }
-                    candySaleTotals.put(currentCandy,qty);
                 }
             }
+        } catch (FileNotFoundException e) {
         }
-        return candySaleTotals;
+        return inventory;
     }
 
     public int getPreviousTotalCandy() {
