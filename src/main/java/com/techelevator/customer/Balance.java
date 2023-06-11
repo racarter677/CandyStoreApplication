@@ -67,7 +67,7 @@ public class Balance {
             else str.append("\n");
         }
         // Set the balance back to 0
-        balance = new BigDecimal("0");
+        balance = new BigDecimal("0.00");
         // Log change given
         log.writeChange(change, balance);
         return str.toString();
