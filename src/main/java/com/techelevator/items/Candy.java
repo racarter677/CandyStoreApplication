@@ -12,6 +12,7 @@ public abstract class Candy {
     private BigDecimal totalRevenue = new BigDecimal("0.00");
     private final int STARTING_QTY = 100;
     private boolean isActiveInventory;
+    private int instancesOfID = 0;
 
     public Candy(String ID, String name, BigDecimal price, boolean wrapper) {
         this.ID = ID;
@@ -79,7 +80,13 @@ public abstract class Candy {
         return isActiveInventory;
     }
 
+    public int getInstancesOfID() {
+        return instancesOfID;
+    }
 
+    public void increaseInstancesOfID() {
+        ++instancesOfID;
+    }
 
     public abstract String getCandyType();
 

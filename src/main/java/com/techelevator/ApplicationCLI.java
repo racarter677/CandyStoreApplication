@@ -69,7 +69,7 @@ public class ApplicationCLI {
 					}
 					else if (userInput.equals("2")) {
 						menu.displayInventory(inventory);
-						userInput = menu.selectProducts();
+						userInput = menu.selectProducts().toUpperCase();
 						if (!inventory.getInventoryMap().containsKey(userInput)) {
 							menu.displayMessage("Invalid ID");
 						}

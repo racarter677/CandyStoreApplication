@@ -10,16 +10,13 @@ import java.util.TreeMap;
 
 public class Inventory {
 
-//    private final int STARTING_QTY = 100;
     private Map<String, Candy> inventory;
     private Map<String, Integer> inventoryQuantities = new HashMap<>();
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
 
     public Inventory(Map<String, Candy> inventory) {
         this.inventory = inventory;
-//        for (Map.Entry<String, Candy> candy : inventory.entrySet()) {
-//            inventoryQuantities.put(candy.getKey(), STARTING_QTY);
-//        }
+
     }
 
     public void removeFromInventory(String ID, int quantityToRemove) {

@@ -30,7 +30,6 @@ public class Menu {
         System.out.println("(3) Quit");
         System.out.println();
         System.out.print("Please make a selection: ");
-
         return userInput.nextLine();
     }
 

@@ -22,7 +22,7 @@ public class InventoryFileReader {
     private static int previousTotalCandy = 0;
     private static BigDecimal previousTotalSales = new BigDecimal("0.00");
 
-    public InventoryFileReader(String inventoryFilePath){
+    public InventoryFileReader(String inventoryFilePath) {
         this.filePath = inventoryFilePath;
     }
     public Map<String, Candy> getInventory() throws FileNotFoundException {
@@ -79,11 +79,21 @@ public class InventoryFileReader {
                     BigDecimal totalRevenue = new BigDecimal(currentLineToArray[3].trim().substring(1));
                     BigDecimal price = totalRevenue.divide(new BigDecimal(qty), 2, RoundingMode.HALF_UP);
                     boolean isWrapped = true;
-                    if (inventory.containsKey(candyID)) {
-                        currentCandy = inventory.get(candyID);
+                    String iDSubstring = candyID.substring(0, 2);
+                    boolean isAlreadyPresent = inventory.containsKey(iDSubstring);
+                    boolean namesMatch = false;
+                    if(isAlreadyPresent) {
+                        namesMatch = inventory.get(iDSubstring).getName().equals(name);
+                    }
+                    if (isAlreadyPresent && namesMatch) {
+                        currentCandy = inventory.get(iDSubstring);
                         currentCandy.setTotalSold(qty);
                         currentCandy.setTotalRevenue(totalRevenue);
-                    } else {
+                    } else if (isAlreadyPresent) {
+                        inventory.get(iDSubstring).increaseInstancesOfID();
+                        candyID = iDSubstring + (char) ('a' + inventory.get(iDSubstring).getInstancesOfID());
+                    }
+                    if (!isAlreadyPresent || !namesMatch) {
                         if (candyID.startsWith("C")) {
                             currentCandy = new Chocolate(candyID, name, price, isWrapped, false);
                         } else if (candyID.startsWith("S")) {

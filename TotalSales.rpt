@@ -1,9 +1,28 @@
 ***************************************************************
 ******************* Candy Store Total Sales *******************
 ***************************************************************
-ID | Candy               |  Qty |      Cost |   QTY % |  Cost %
-C1 | Snuckers Bar        |   20 |    $27.00 |  66.67% |  72.00%
-C3 | Truffle             |   10 |    $10.50 |  33.33% |  28.00%
+ID* | Candy              |  Qty |      Cost |   QTY % |  Cost %
+C1  | Snuckers Bar       |   55 |    $74.25 |  10.62% |  10.30%
+C1b | Choccy             |   20 |    $22.00 |   3.86% |   3.05%
+C1c | M and Ms           |   10 |    $11.00 |   1.93% |   1.53%
+C1d | Choco Drops        |   10 |    $11.00 |   1.93% |   1.53%
+C2  | Flat Top           |   30 |    $24.00 |   5.79% |   3.33%
+C3  | Truffle            |   32 |    $33.60 |   6.18% |   4.66%
+C3b | Cocoa Rounds       |    8 |    $18.00 |   1.54% |   2.50%
+H2  | Poppins            |   10 |    $33.50 |   1.93% |   4.65%
+H2b | Fruit Gems         |   17 |    $25.50 |   3.28% |   3.54%
+H3  | Fruit Lumps        |   10 |     $2.50 |   1.93% |   0.35%
+H3b | Lemon Drops        |   13 |     $9.10 |   2.51% |   1.26%
+L1  | Dracula Piller     |    5 |     $5.75 |   0.97% |   0.80%
+L2  | Berry Strings      |   30 |    $64.50 |   5.79% |   8.95%
+L2b | Berry Whips        |   18 |    $20.70 |   3.47% |   2.87%
+L4  | OK & Scarce        |   30 |    $52.50 |   5.79% |   7.29%
+L5  | Twistlers          |   10 |    $36.00 |   1.93% |   5.00%
+L5b | Licorice Chews     |    1 |     $1.00 |   0.19% |   0.14%
+S3  | Sour Tart          |  105 |    $89.25 |  20.27% |  12.39%
+S3b | Tangy Twists       |   40 |   $100.00 |   7.72% |  13.88%
 
-Total Number of Candy Sold: 30
-Total Sales: $37.50
+Total Number of Candy Sold: 518
+Total Sales: $720.55
+
+*Letters after ID indicate the same ID was reused when switching out inventory

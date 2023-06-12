@@ -13,7 +13,7 @@ public class Balance {
 
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
     private BigDecimal balance;
-    private final BigDecimal MAX_ADDITION =  new BigDecimal("500.00"); // Change back to 100 before submitting
+    private final BigDecimal MAX_ADDITION =  new BigDecimal("100.00"); // Change back to 100 before submitting
     private final BigDecimal MAX_BALANCE = new BigDecimal("1000.00");
     private Log log = new Log();
 

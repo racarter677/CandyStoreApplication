@@ -17,7 +17,7 @@ public class Log {
     private final DateTimeFormatter dTFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm:ss a");
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
 
-    public void writeAdd(BigDecimal startBalance, BigDecimal endingBalance) { //
+    public void writeAdd(BigDecimal startBalance, BigDecimal endingBalance) {
         final String LOG_MESSAGE = "MONEY RECEIVED";
         logList.add(String.format("%s %s %s %s",
                 LocalDateTime.now().format(dTFormat),
@@ -26,7 +26,7 @@ public class Log {
                 currency.format(endingBalance)));
     }
 
-    public void writeSub(Candy candy, int qty, BigDecimal startBalance, BigDecimal endingBalance) { //+7
+    public void writeSub(Candy candy, int qty, BigDecimal startBalance, BigDecimal endingBalance) {
         logList.add(String.format("%s %s %s %s %s %s",
                 LocalDateTime.now().format(dTFormat),
                 qty,
@@ -36,7 +36,7 @@ public class Log {
                 currency.format(endingBalance)));
     }
 
-    public void writeChange(BigDecimal change, BigDecimal balance) { //
+    public void writeChange(BigDecimal change, BigDecimal balance) {
         final String LOG_MESSAGE = "CHANGE GIVEN";
         logList.add(String.format("%s %s %s %s",
                 LocalDateTime.now().format(dTFormat),
@@ -55,4 +55,7 @@ public class Log {
         logList = new ArrayList<>();
     }
 
+    public List<String> getLogList() {
+        return logList;
+    }
 }

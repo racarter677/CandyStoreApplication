@@ -42,16 +42,16 @@ public class SalesReport {
                 BigDecimal cost = candy.getTotalRevenue();
                 String qtyPercentage = percentage.format(new BigDecimal(qty).divide(new BigDecimal(fullTotalQty), 4, RoundingMode.HALF_UP));
                 String costPercentage = percentage.format(cost.divide(fullTotalCost, 4, RoundingMode.HALF_UP));
-                salesReportList.add(String.format("%-3s| %-20s|%5s |%10s |%8s |%8s\n", ID, name, qty, currency.format(cost), qtyPercentage, costPercentage));
+                salesReportList.add(String.format("%-4s| %-19s|%5s |%10s |%8s |%8s\n", ID, name, qty, currency.format(cost), qtyPercentage, costPercentage));
             }
         }
         salesReportList.sort(null);
         salesReportList.add(0, "***************************************************************\n");
         salesReportList.add(1, "******************* Candy Store Total Sales *******************\n");
         salesReportList.add(2, "***************************************************************\n");
-        salesReportList.add(3, String.format("%-3s| %-20s|%5s |%10s |%8s |%8s\n", "ID", "Candy", "Qty", "Cost", "QTY %", "Cost %"));
+        salesReportList.add(3, String.format("%-4s| %-19s|%5s |%10s |%8s |%8s\n", "ID*", "Candy", "Qty", "Cost", "QTY %", "Cost %"));
         salesReportList.add(String.format("\nTotal Number of Candy Sold: %s\n", numbers.format(fullTotalQty)));
-        salesReportList.add(String.format("Total Sales: %s", currency.format(fullTotalCost)));
+        salesReportList.add(String.format("Total Sales: %s\n\n*Letters after ID indicate the same ID was reused when switching out inventory", currency.format(fullTotalCost)));
         LogFileWriter makeReport = new LogFileWriter();
         makeReport.writeReport("TotalSales.rpt", salesReportList);
 
